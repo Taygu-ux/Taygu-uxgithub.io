@@ -1,0 +1,312 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0a0a2a;
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    background-image: url('constellation-bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    animation: moveBackground 120s linear infinite;
+}
+
+/* Create constellation background as fallback */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a2a;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px),
+        radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 1px, transparent 2px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    z-index: -1;
+}
+
+/* Moving background animation */
+@keyframes moveBackground {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+/* Shooting stars */
+.shooting-star {
+    position: fixed;
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(transparent, #fff);
+    z-index: 1;
+    animation: shootingStar 3s linear infinite;
+    pointer-events: none;
+}
+
+.shooting-star:nth-child(1) {
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.shooting-star:nth-child(2) {
+    top: 30%;
+    left: 60%;
+    animation-delay: 1s;
+}
+
+.shooting-star:nth-child(3) {
+    top: 60%;
+    right: 30%;
+    animation-delay: 2s;
+}
+
+@keyframes shootingStar {
+    0% {
+        transform: translateY(-100px) rotate(45deg);
+        opacity: 0;
+    }
+    10%, 90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(300px) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+/* Moving star container and image */
+.moving-star-container {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    width: 50px;
+    height: 50px;
+    z-index: 1000;
+    animation: floatStar 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.moving-star {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+@keyframes floatStar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Add a checkbox hack to make the clicking work without JS */
+#star-toggle {
+    display: none;
+}
+
+.star-label {
+    cursor: pointer;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    top: 50px;
+    right: 50px;
+    z-index: 1001;
+}
+
+/* Glow effect for cards when checkbox is checked */
+#star-toggle:checked ~ .container .card {
+    box-shadow: 0 0 20px 8px rgba(255, 255, 190, 0.8);
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 15px 5px rgba(255, 255, 190, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 25px 10px rgba(255, 255, 190, 1);
+    }
+}
+
+/* Header styling */
+header {
+    text-align: center;
+    padding: 40px 0;
+    background: linear-gradient(to right, transparent, rgba(10, 10, 42, 0.8), transparent);
+}
+
+header h1 {
+    font-size: 3.5rem;
+    text-shadow: 0 0 10px #87cefa;
+    margin: 0;
+    letter-spacing: 3px;
+}
+
+/* Navigation styling */
+nav {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    background-color: rgba(20, 20, 50, 0.7);
+    margin-bottom: 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 1.2rem;
+    padding: 5px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background-color: rgba(135, 206, 250, 0.3);
+    text-shadow: 0 0 5px #87cefa;
+}
+
+/* Container and section styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    margin-bottom: 60px;
+}
+
+section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 8px #87cefa;
+}
+
+/* Cards styling */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background-color: rgba(20, 30, 60, 0.7);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(135, 206, 250, 0.5);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #87cefa;
+}
+
+.card-content p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.card-link {
+    display: inline-block;
+    color: #fff;
+    background-color: #1e3799;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.card-link:hover {
+    background-color: #4a69bd;
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(10, 10, 42, 0.8);
+    margin-top: 40px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    nav a {
+        margin: 5px 0;
+    }
+    
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    section h2 {
+        font-size: 1.8rem;
+    }
+    
+    .cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .moving-star-container,
+    .star-label {
+        width: 40px;
+        height: 40px;
+        top: 20px;
+        right: 20px;
+    }
+}
